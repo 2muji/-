@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>モノミッケ | 落とし物登録アプリ</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Lost & Found Web App</p>
+      <h1>モノミッケ</h1>
+      <p class="subtitle">落とし物の登録・検索・受け取り連絡ができるアプリ</p>
+    </div>
+    <button id="resetDemoBtn" class="secondary-btn">デモデータを入れ直す</button>
+  </header>
+
+  <main class="layout">
+    <section class="panel form-panel">
+      <div class="section-title-wrap">
+        <h2>落とし物を登録</h2>
+        <p>名前、特徴、発見者、場所、時刻、写真を保存できます。</p>
+      </div>
+
+      <form id="itemForm" class="item-form">
+        <label>
+          落とし物の名前
+          <input type="text" id="name" required maxlength="80" placeholder="例：青い筆箱" />
+        </label>
+
+        <label>
+          特徴
+          <textarea id="features" rows="3" required maxlength="300" placeholder="例：シールが貼ってある、角が少しへこんでいる"></textarea>
+        </label>
+
+        <label>
+          発見者
+          <input type="text" id="finder" required maxlength="80" placeholder="例：田中さん" />
+        </label>
+
+        <label>
+          発見場所
+          <input type="text" id="location" required maxlength="120" placeholder="例：2年A組の前の廊下" />
+        </label>
+
+        <label>
+          発見時刻
+          <input type="datetime-local" id="foundAt" required />
+        </label>
+
+        <label>
+          写真
+          <input type="file" id="photo" accept="image/*" />
+        </label>
+
+        <div class="preview-wrap">
+          <img id="photoPreview" alt="写真プレビュー" hidden />
+        </div>
+
+        <button type="submit" class="primary-btn">登録する</button>
+      </form>
+    </section>
+
+    <section class="panel search-panel">
+      <div class="section-title-wrap">
+        <h2>落とし物を検索</h2>
+        <p>名前、特徴、場所、時刻、発見者などをまとめて検索できます。</p>
+      </div>
+
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="例：筆箱、廊下、4/18、田中 など" />
+        <button id="clearSearchBtn" class="secondary-btn">クリア</button>
+      </div>
+
+      <div class="stats" id="stats"></div>
+      <div id="itemList" class="item-list"></div>
+    </section>
+  </main>
+
+  <dialog id="chatDialog" class="chat-dialog">
+    <div class="chat-header">
+      <div>
+        <p class="eyebrow">受け取り相談チャット</p>
+        <h3 id="chatTitle">チャット</h3>
+      </div>
+      <button id="closeChatBtn" class="icon-btn" aria-label="閉じる">✕</button>
+    </div>
+
+    <div class="chat-role-switch">
+      <button class="role-btn active" data-role="owner">落とし主として送信</button>
+      <button class="role-btn" data-role="finder">発見者として送信</button>
+    </div>
+
+    <div id="chatMessages" class="chat-messages"></div>
+
+    <form id="chatForm" class="chat-form">
+      <textarea id="chatInput" rows="3" placeholder="受け取り場所や時間などを送信します" required></textarea>
+      <button type="submit" class="primary-btn">送信</button>
+    </form>
+  </dialog>
+
+  <template id="itemCardTemplate">
+    <article class="item-card">
+      <div class="item-image-wrap">
+        <img class="item-image" alt="落とし物の写真" />
+        <div class="image-fallback">画像なし</div>
+      </div>
+      <div class="item-content">
+        <div class="item-top">
+          <h3 class="item-name"></h3>
+          <span class="item-time"></span>
+        </div>
+        <p class="item-features"></p>
+        <dl class="item-meta">
+          <div><dt>発見者</dt><dd class="item-finder"></dd></div>
+          <div><dt>場所</dt><dd class="item-location"></dd></div>
+        </dl>
+        <div class="item-actions">
+          <button class="secondary-btn chat-open-btn">チャットで連絡する</button>
+          <button class="danger-btn delete-btn">削除</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
